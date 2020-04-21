@@ -30,7 +30,6 @@ class Board
     end
     
     def show_row(pos)
-         #shows left and right of pos if they are NOT bombs or not flagged
         row,col = pos
         left_row = [row,(col - 1)] 
         right_row = [row,(col + 1)]
@@ -44,8 +43,18 @@ class Board
         end
     end
 
-    def show_col
-        #shows up and down of pos if they are NOT bombs or not flagged
+    def show_col(pos)
+        row,col = pos
+        up = [(row - 1),col]
+        down = [(row + 1),col]
+
+        up_down = up,down
+        up_down.each do |c|
+            if no_flag_or_bomb?(c) && legal_pos?(c)
+                c_row,c_col = c
+                @rows[c_row][c_col] = "X"
+            end
+        end
     end
     require "byebug"
     def show_diagnol(pos)
