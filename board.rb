@@ -87,6 +87,7 @@ class Board
     end
 
     def legal_pos?(pos)
+        return false if pos == nil
         row,col = pos
         if (row < 0 || row > 8) || (col < 0 || col > 8)
             return false
