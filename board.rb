@@ -15,6 +15,18 @@ class Board
         row,col = pos
         @rows[row][col] = value
     end
+
+    def flag(pos)
+        row, col = pos
+        if @rows[row][col] == "B"
+            @rows[row][col] = "FB"
+            return true
+        else
+            @rows[row][col] = "F"
+            return true
+        end
+        return false
+    end
     
     def reveal_neighbors(pos)
         row,col = pos
@@ -76,7 +88,7 @@ class Board
 
     def legal_pos?(pos)
         row,col = pos
-        if (row < 0 || row > 8) && (col < 0 || col > 8)
+        if (row < 0 || row > 8) || (col < 0 || col > 8)
             return false
         end
 
@@ -85,7 +97,7 @@ class Board
 
     def no_flag_or_bomb?(pos)
         row,col = pos
-        if @rows[row][col] == "F" || @rows[row][col] == "B"
+        if @rows[row][col] == "F" || @rows[row][col] == "B" || @rows[row][col] == "FB"
             return false
         end
         true
@@ -96,7 +108,7 @@ class Board
         count = 0
         adjacent.each do |adj|
             row,col = adj
-            if @rows[row][col] == "B" && legal_pos?(adj)
+            if (@rows[row][col] == "B" || @rows[row][col] == "FB")  && legal_pos?(adj)
                 count += 1
             end
         end
