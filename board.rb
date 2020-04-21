@@ -17,8 +17,15 @@ class Board
     end
     
     def reveal_neighbors(pos)
-            #show who surrounding neighbors are
-    
+        row,col = pos
+       if no_flag_or_bomb?(pos) && legal_pos?(pos)
+        @rows[row][col] = 'X'
+        show_row(pos)
+        show_col(pos)
+        show_diagnol(pos)
+        return true
+       end
+       false
     end
     
     def show_row(pos)
