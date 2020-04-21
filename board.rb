@@ -1,5 +1,5 @@
 class Board
-
+attr_reader :rows
     def initialize
         new_arr = Array.new(9) {Array.new(9,"")}
         8.times { new_arr[rand(0..8)][rand(0..8)] = "B"}
@@ -29,14 +29,14 @@ class Board
     end
     
     def reveal_neighbors(pos)
-        row,col = pos
-       if no_flag_or_bomb?(pos) && legal_pos?(pos)
-        @rows[row][col] = fringe_count(pos)
-        show_row(pos)
-        show_col(pos)
-        show_diagnol(pos)
-        return true
-       end
+            row,col = pos
+            if no_flag_or_bomb?(pos) && legal_pos?(pos)
+            @rows[row][col] = fringe_count(pos)
+            show_row(pos)
+            show_col(pos)
+            show_diagnol(pos)
+          return true
+            end
        false
     end
     
@@ -87,16 +87,13 @@ class Board
     end
 
     def legal_pos?(pos)
-        return false if pos == nil
-        row,col = pos
-        if (row < 0 || row > 8) || (col < 0 || col > 8)
-            return false
-        end
-
-        true
+        pos.is_a?(Array) &&
+        pos.length == 2 &&
+        pos.all? { |x| x.between?(0,8)}
     end
 
     def no_flag_or_bomb?(pos)
+        return false if pos == nil
         row,col = pos
         if @rows[row][col] == "F" || @rows[row][col] == "B" || @rows[row][col] == "FB"
             return false
@@ -105,6 +102,7 @@ class Board
     end
 
     def fringe_count(pos)
+        return false if pos == nil
         adjacent = adjacent_pos(pos)
         count = 0
         adjacent.each do |adj|
