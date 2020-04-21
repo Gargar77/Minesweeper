@@ -15,14 +15,6 @@ class Board
         row,col = pos
         @rows[row][col] = value
     end
-
-    def columns
-            @rows.transpose
-    end
-
-    def diagnol
-        #diagnol of a pos
-    end
     
     def reveal_neighbors(pos)
             #show who surrounding neighbors are
